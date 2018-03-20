@@ -1,0 +1,4 @@
+TYPE,FILE
+regions_list,LIST_CAMERA_PLUR_2018.csv
+coor_dict,COOR_CAMERA_PLUR_2018.csv
+map,COLL_CAMERA_PLUR_2018.geojson
