@@ -3,6 +3,7 @@ import json
 import random
 import sent_mod as s
 import geo_mod as gj
+import load_utilies as lu
 
 global_counter = 0 #Global Counter to print the number of tweets actually used during the analysis
 
@@ -38,79 +39,6 @@ def compute_pop(filenames): #Compute the popularity of a single search group in 
 
     return normpop
 
-def load_regions_list_from_file(filename): #load the list of regions by name given a tab separated csv
-    regions_list = []
-    with open(filename) as f:
-        for line in f.readlines():
-            zones_list = [x.strip() for x in line.split(' ')]
-            regions_list.append(zones_list)
-
-    return regions_list
-
-def load_labels_feature(filename):#Discovers the feature for the names of the regions
-    with open(filename,"r") as f:
-        data = json.load(f)
-
-    features_list = list(data["features"][0]['properties'].keys())
-
-    print('List of features from your map:\n')
-    print(features_list[:])
-    print('\n')
-
-    labels_feature = input('Name exactly the feature that containes the labels(e.g. NAME): ')
-
-    return labels_feature
-
-def load_regions_list():#Discovers the CSV REGIONS loading the list of regions
-    list_csv_files = [csv_file for csv_file in os.listdir(os.getcwd()) if csv_file.endswith('.csv')]
-
-    if len(list_csv_files) == 1:
-        regions_list = load_regions_list_from_file(list_csv_files[0])
-    else:
-        print('Missing or multiple list_REGIONS csv files')
-        print(list_csv_files[:])
-        list_csv_file = input('Which is the right file?')
-        regions_list = load_regions_list_from_file(list_csv_file)
-
-    return regions_list
-
-def load_map_file(): #Discovers the GEOJSON map file
-    map_geojson_files = [geojson_file for geojson_file in os.listdir(os.getcwd()) if geojson_file.endswith('.geojson')]
-
-    if len(map_geojson_files) == 1:
-        map = map_geojson_files[0]
-        labels_feature = load_labels_feature(map)
-    else:
-        print('Missing or multiple MAP geojson files'+'\n')
-        print(map_geojson_files[:])
-        map = input('Which is the right file?')
-        labels_feature = load_labels_feature(map)
-
-    return map, labels_feature
-
-def load_data_from_path_pop(data_path): #Changes directory and loads the search_groups_list,regions_list, map from the directory given by looking for matching file extesions
-    os.chdir(data_path)
-
-    search_groups_list = [search_group_folder for search_group_folder in os.listdir(os.getcwd()) if (os.path.isdir(search_group_folder) and search_group_folder != '__pycache__' and search_group_folder != '.ipynb_checkpoints'  )]
-    
-    if os.path.isfile('config.csv'):
-        data = pd.read_csv('config.csv', encoding='latin_1',sep=',', index_col = 0)
-        data_files_dict = {}
-        print(data)
-        data_files_dict = data['FILE'].to_dict()
-        
-        regions_list_file = data_files_dict['regions_list'] #load the dict of coordinates by name given a tab separated csv
-        regions_list = load_regions_list_from_file(regions_list_file)
-        
-        map = data_files_dict['map']
-        labels_feature = load_labels_feature(map)
-        
-    else:
-        regions_list = load_regions_list()
-        map, labels_feature = load_map_file()
-
-    return search_groups_list,regions_list, map, labels_feature
-
 def main():
 
     script_cwd = os.getcwd()
@@ -123,7 +51,7 @@ def main():
     no joke don\'t put anything else: """)
 
 
-    search_groups_list,regions_list, map, labels_feature = load_data_from_path_pop(data_path)
+    search_groups_dict,search_groups_list,regions_list, map, labels_feature = lu.load_data_from_path_pop(data_path)
 
     data_dir = os.getcwd()
 

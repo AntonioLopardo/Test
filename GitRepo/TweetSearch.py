@@ -6,20 +6,6 @@ import time
 import os
 import sys
 
-
-'''
-In order to use this script you should register a data-mining application
-with Twitter.  Good instructions for doing so can be found here:
-http://marcobonzanini.com/2015/03/02/mining-twitter-data-with-python-part-1/
-After doing this you can copy and paste your unique consumer key,
-consumer secret, access token, and access secret into the load_api()
-function below.
-The main() function can be run by executing the command:
-python twitter_search.py
-I used Python 3 and tweepy version 3.5.0.  You will also need the other
-packages imported above.
-'''
-
 def load_api():
     ''' Function that loads the twitter API after authorizing the user. '''
 
@@ -106,14 +92,6 @@ def dist_search(Regione, search_phrases, min_days_old, max_days_old):
     min_days_old, max_days_old = min_days_old, max_days_old   # search limits e.g., from 7 to 8
                                                # gives current weekday from last week,
                                                # min_days_old=0 will search from right now
-    #USA = '39.8,-95.583068847656,2500km'       # this geocode includes nearly all American
-    #test ='37.781157,-122.398720,1000mi'
-    #Toscana = '43.471157,11.028720,50mi'
-    #Veneto = '45.666157,12.243720,70mi'
-
-
-              # states (and a large portion of Canada)
-
 
     # loop over search items,
     # creating a new file for each
@@ -188,4 +166,3 @@ def dist_search(Regione, search_phrases, min_days_old, max_days_old):
                     else:
                         print('Maximum number of empty tweet strings reached - breaking')
                         break
-
