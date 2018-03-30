@@ -1,6 +1,7 @@
 import os
 import json
 import csv
+import pandas as pd
 
 def load_coor_data_from_file(filename):
     data = pd.read_csv(filename, encoding='latin_1',sep=' ', index_col = 0)
@@ -77,9 +78,11 @@ def load_search_dict_from_path(data_path):
     if os.path.isfile('search_dict.csv'):
         data = pd.read_csv('search_dict.csv', encoding='latin_1',sep=',', index_col = 0)
         print(data)
-        search_groups_dict = data['SEARCH_GROUP'].to_dict()
+        search_groups_dict = data['SEARCH_TERMS'].to_dict()
         for search_group in search_groups_dict:
+            print(search_group)
             search_terms = search_groups_dict[search_group].split('$')
+            print(search_terms[:])
             search_groups_dict[search_group] = search_terms
 
     else:

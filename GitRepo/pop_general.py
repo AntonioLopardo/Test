@@ -14,6 +14,7 @@ def compute_pop(filenames): #Compute the popularity of a single search group in 
     num_tweets = 0 # number of tweets
     normpop = 0 # pop/num_tweets
     for file in filenames:
+        #print(file)
         with open(file, 'r') as f:
             tweets_data_infile = []
             for line in f:
@@ -66,6 +67,7 @@ def main():
         os.chdir(dir_string) #cd into the search_group directory
 
         for region in regions_list:
+            #print(region)
             name_region = region[0][:-2] #save the name of the region removing the subsection in the first zone
             json_files = [] #list of the files in every zone of the region and every search terms
 

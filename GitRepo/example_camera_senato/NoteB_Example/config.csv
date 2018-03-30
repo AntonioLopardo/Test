@@ -1,0 +1,4 @@
+TYPE,FILE
+regions_list,LIST_LAZIO_TEST.csv
+coor_dict,COOR_LAZIO_TEST.csv
+map,COLL_LAZIO_CAMERA_PLUR_2018.geojson

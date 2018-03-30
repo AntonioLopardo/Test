@@ -4,10 +4,16 @@ import time
 import pandas as pd
 import datetime as dt
 import load_utilies as lu
+import sys
 
 def main():
-
-    data_path = input('Where do you want to keep the data:')
+    
+    if len(sys.argv) is 1:
+    
+        data_path = input('Where do you want to keep the data:')
+    
+    else:
+        data_path = sys.argv[1] 
 
     search_groups_dict,search_groups_list, regions_list, coor_dict = lu.load_data_from_path_search(data_path)
 
@@ -26,11 +32,12 @@ def main():
                 curr_dir = os.getcwd()
                 zone_path = search_group_path + '/' + zone
                 if os.path.isdir(zone):
-                    print('Already in\n')
+                    print(zone,'Already in\n')
                 else:
                     os.mkdir(zone_path)
+        os.chdir(dir_pre_search_group)
 
-    print(regions_list[:])
+    #print(regions_list[:])
 
     min_days_old, max_days_old = 0,7 #setting limits for age of the tweets
     max_search_counter = len(search_groups_list)
