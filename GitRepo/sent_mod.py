@@ -11,6 +11,8 @@ tokenizer_f = open("model_files/tokenizer.pickle", "rb")
 tokenizer = pickle.load(tokenizer_f)
 tokenizer_f.close()
 
+tokenizer.oov_token = None
+
 model = load_model('model_files/ItalianSentCls.h5')
 
 def sentiment(text):
