@@ -75,7 +75,50 @@ def load_map_file(): #Discovers the GEOJSON map file
 def load_search_dict_from_path(data_path):
     search_groups_dict = {}
 
-    if os.path.isfile('search_dict.csv'):
+    if os.path.isfile('search_dict.csv') == False:
+        adding_search_group = True
+        while(adding_search_group):
+            search_group = input('''Add new search_group, type stop otherwise - ''')
+            if search_group.find('stop') == 0:
+                adding_search_group = False
+                print('Stop_Add_groups')
+
+            search_terms_list = []
+            adding_search_term = True
+
+            while(adding_search_term and adding_search_group):
+
+                search_term = input('''Add new search_term, type stop otherwise - ''')
+
+                print(search_term)
+
+                if search_term.find('stop') == 0:
+                    adding_search_term = False
+                    print('Stop_Add_terms')
+                if adding_search_term:
+                    print('Add_terms')
+                    search_terms_list.append([search_term])
+
+            if adding_search_group:
+                search_groups_dict[search_group] = search_terms_list
+
+
+        with open("search_dict.csv", 'w', newline='') as csvfile:
+            writer = csv.writer(csvfile,quoting=csv.QUOTE_NONE, delimiter='|', quotechar='',escapechar='\\')
+
+            writer.writerow(['SEARCH_GROUP,SEARCH_TERMS'])
+
+            for key,entry in search_groups_dict.items():
+
+                data = entry[0][0]
+                for single_term in entry[1:]:
+                    data = data + '$' + single_term[0]
+
+                row = key + ',' + data
+
+                writer.writerow([row])
+
+
         data = pd.read_csv('search_dict.csv', encoding='latin_1',sep=',', index_col = 0)
         print(data)
         search_groups_dict = data['SEARCH_TERMS'].to_dict()
@@ -85,39 +128,6 @@ def load_search_dict_from_path(data_path):
             print(search_terms[:])
             search_groups_dict[search_group] = search_terms
 
-    else:
-        adding_search_group = True
-        while(adding_search_group):
-            search_group = input('''Add new search_group, type stop otherwise''')
-            if search_group is not 'stop':
-                adding_search_group = False
-
-            search_terms = []
-            adding_search_term = True
-
-            while(adding_search_term and adding_search_group):
-                search_term = input('''Add new search_term, type stop otherwise''')
-                if search_group is not 'stop':
-                    adding_search_term = False
-                if adding_search_term:
-                    search_term.append(search_term)
-
-            if adding_search_group:
-                search_groups_dict[search_group] = search_term
-
-        writer = csv.writer(open("search_dict.csv", 'w'))
-
-        writer.writerow('SEARCH_GROUP,SEARCH_TERMS')
-
-        for keys,entry in search_groups_dict:
-
-            data = entry[0]
-            for single_term in entry[1:]:
-                data.append('$' + single_term)
-
-            row = key + ',' + data
-
-            writer.writerow(row)
 
     return search_groups_dict
 
