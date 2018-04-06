@@ -1,4 +1,5 @@
 import os
+import load_utilies as lu
 
 def reg_coor_write(list_csv_files):
     alphabet = list(string.ascii_lowercase)
@@ -65,3 +66,12 @@ def main():
 
     reg_coor_write(coor_csv_files)
     reg_list_write(coor_csv_files)
+
+    map_dir,_ = lu.load_map_file()
+
+    with open('config.csv', 'w') as f:
+        writer = csv.writer(f,delimiter=' ')
+        writer.writerow(['ZONES','COOR'])
+        writer.writerow(['regions_list','LIST_ZONES.csv'])
+        writer.writerow(['coor_dict','COOR_ZONES.csv'])
+        writer.writerow(['map',map_dir])
