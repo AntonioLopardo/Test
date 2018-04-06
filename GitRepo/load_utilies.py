@@ -5,6 +5,7 @@ import pandas as pd
 
 def load_coor_data_from_file(filename):
     data = pd.read_csv(filename, encoding='latin_1',sep=' ', index_col = 0)
+    print(data)
     coor_dict = {}
     coor_dict = data['COOR'].to_dict()
     return coor_dict #load the dict of coordinates by name given a tab separated csv
