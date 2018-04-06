@@ -71,7 +71,7 @@ def main():
 
     with open('config.csv', 'w') as f:
         writer = csv.writer(f,delimiter=' ')
-        writer.writerow(['ZONES','COOR'])
+        writer.writerow(['TYPE','FILE'])
         writer.writerow(['regions_list','LIST_ZONES.csv'])
         writer.writerow(['coor_dict','COOR_ZONES.csv'])
         writer.writerow(['map',map_dir])
