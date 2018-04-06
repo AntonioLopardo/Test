@@ -1,12 +1,16 @@
 import os
 import load_utilies as lu
+import sys
+import string
+import csv
 
-def reg_coor_write(list_csv_files):
+def reg_coor_write(list_csv_files, data_path):
+    print('coor')
     alphabet = list(string.ascii_lowercase)
     coor_list = []
     for file in list_csv_files:
 
-        with open(file, 'r') as f:
+        with open('draw_data'+ '/' + file, 'r') as f:
             reader = csv.reader(f)
             data_list = list(reader)
 
@@ -27,12 +31,12 @@ def reg_coor_write(list_csv_files):
         for coor_list_entry in coor_list:
             writer.writerow(coor_list_entry)
 
-def reg_list_write(list_csv_files):
+def reg_list_write(list_csv_files, data_path):
     alphabet = list(string.ascii_lowercase)
     reg_list = []
     for file in list_csv_files:
 
-        with open(file, 'r') as f:
+        with open('draw_data'+ '/' + file, 'r') as f:
             reader = csv.reader(f)
             data_list = list(reader)
 
@@ -46,7 +50,7 @@ def reg_list_write(list_csv_files):
         reg_list.append(zones_list)
 
     with open('LIST_ZONES.csv', 'w') as f:
-        writer = csv.writer(f)
+        writer = csv.writer(f,delimiter=' ')
         for region in reg_list[:]:
             writer.writerow(region)
 
@@ -59,19 +63,24 @@ def main():
     else:
         data_path = sys.argv[1]
 
+    os.chdir(data_path)
     cur_dir = os.getcwd()
-    os.chdir(dat_path)
+    os.chdir('draw_data')
     coor_csv_files = [csv_file for csv_file in os.listdir(os.getcwd()) if csv_file.endswith('.csv')]
     os.chdir(cur_dir)
 
-    reg_coor_write(coor_csv_files)
-    reg_list_write(coor_csv_files)
+    reg_coor_write(coor_csv_files, data_path)
+    reg_list_write(coor_csv_files, data_path)
 
     map_dir,_ = lu.load_map_file()
 
     with open('config.csv', 'w') as f:
-        writer = csv.writer(f,delimiter=' ')
+        writer = csv.writer(f,delimiter=',')
         writer.writerow(['TYPE','FILE'])
         writer.writerow(['regions_list','LIST_ZONES.csv'])
         writer.writerow(['coor_dict','COOR_ZONES.csv'])
         writer.writerow(['map',map_dir])
+
+
+if __name__ == "__main__":
+    main()

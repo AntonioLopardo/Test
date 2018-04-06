@@ -16,6 +16,7 @@ def main():
         data_path = sys.argv[1] 
 
     search_groups_dict,search_groups_list, regions_list, coor_dict = lu.load_data_from_path_search(data_path)
+    print('loaded_data')
 
     data_dir = os.getcwd()
 

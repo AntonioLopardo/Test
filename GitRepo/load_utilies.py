@@ -119,15 +119,14 @@ def load_search_dict_from_path(data_path):
 
                 writer.writerow([row])
 
-
-        data = pd.read_csv('search_dict.csv', encoding='latin_1',sep=',', index_col = 0)
-        print(data)
-        search_groups_dict = data['SEARCH_TERMS'].to_dict()
-        for search_group in search_groups_dict:
-            print(search_group)
-            search_terms = search_groups_dict[search_group].split('$')
-            print(search_terms[:])
-            search_groups_dict[search_group] = search_terms
+    data = pd.read_csv('search_dict.csv', encoding='latin_1',sep=',', index_col = 0)
+    print(data)
+    search_groups_dict = data['SEARCH_TERMS'].to_dict()
+    for search_group in search_groups_dict:
+        print(search_group)
+        search_terms = search_groups_dict[search_group].split('$')
+        print(search_terms[:])
+        search_groups_dict[search_group] = search_terms
 
 
     return search_groups_dict
@@ -161,7 +160,9 @@ def load_data_from_path_search(data_path): #Changes directory and loads the sear
     os.chdir(data_path)
 
     search_groups_dict = load_search_dict_from_path(data_path)
+    
     search_groups_list = list(search_groups_dict.keys())
+    print(search_groups_list[:])
 
     if os.path.isfile('config.csv'):
         data = pd.read_csv('config.csv', encoding='latin_1',sep=',', index_col = 0)
