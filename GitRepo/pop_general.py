@@ -37,7 +37,7 @@ def compute_pop(filenames): #Compute the popularity of a single search group in 
 
     except:
         print('0 tweet brah') #handling the case in which no tweets were found in the files
-
+        normpop = 0
     return normpop
 
 def main():
