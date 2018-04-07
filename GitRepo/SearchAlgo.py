@@ -91,6 +91,7 @@ def main():
                         total = 901
                         i = 1
                         while i < total:
+                            print(i)
                             progress(i, total, status='seconds elapsed')
                             time.sleep(1)  # emulating long-playing job
                             i += 1
