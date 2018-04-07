@@ -77,7 +77,13 @@ def main():
                     except:#exception handling, both rate limit and search limit
                         print('exception raised, waiting 15 minutes')
                         print('(until:', dt.datetime.now()+dt.timedelta(minutes=15), ')')
-                        time.sleep(900)
+                        total = 901
+                        i = 1
+                        while i < total:
+                            progress(i, total, status='seconds elapsed')
+                            time.sleep(1)  # emulating long-playing job
+                            i += 1
+
                 os.chdir(dir_pre_zone)
 
         os.chdir(dir_pre_group)
