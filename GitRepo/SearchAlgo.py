@@ -82,7 +82,7 @@ def main():
                         i = 1
                         while i < total:
                             if random.random() < 0.05:
-                                print('elapsed: ' + i +'sec')
+                                print('elapsed: ' + str(i) +'sec')
                             time.sleep(1)  # emulating long-playing job
                             i += 1
 
