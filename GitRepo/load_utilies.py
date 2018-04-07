@@ -148,7 +148,7 @@ def load_data_from_path_pop(data_path): #Changes directory and loads the search_
         regions_list = load_regions_list_from_file(regions_list_file)
 
         map = data_files_dict['map']
-        labels_feature = load_labels_feature(map)
+        labels_feature = data_files_dict['labels_feature']
 
     else:
         regions_list = load_regions_list()

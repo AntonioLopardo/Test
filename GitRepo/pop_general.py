@@ -4,6 +4,7 @@ import random
 import sent_mod as s
 import geo_mod as gj
 import load_utilies as lu
+import sys
 
 global_counter = 0 #Global Counter to print the number of tweets actually used during the analysis
 
@@ -43,14 +44,18 @@ def compute_pop(filenames): #Compute the popularity of a single search group in 
 def main():
 
     script_cwd = os.getcwd()
+    
+    if len(sys.argv) is 1:
 
-    data_path = input("""Path to data,\n
+        data_path = input("""Path to data,\n
     the directory should contain a list_REGIONS csv\n
     a MAP geojson\n
     and the data divided by search_group in different folders\n
     and nothing esle, \n
     no joke don\'t put anything else: """)
 
+    else:
+        data_path = sys.argv[1]
 
     search_groups_dict,search_groups_list,regions_list, map, labels_feature = lu.load_data_from_path_pop(data_path)
 
