@@ -7,6 +7,7 @@ import load_utilies as lu
 import sys
 
 def progress(count, total, status=''):
+    print(' in progress ')
     bar_len = 60
     filled_len = int(round(bar_len * count / float(total)))
 
@@ -87,7 +88,6 @@ def main():
                     except:#exception handling, both rate limit and search limit
                         print('exception raised, waiting 15 minutes')
                         print('(until:', dt.datetime.now()+dt.timedelta(minutes=15), ')')
-                        print('test')
                         total = 901
                         i = 1
                         while i < total:
