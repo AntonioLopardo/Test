@@ -5,17 +5,7 @@ import pandas as pd
 import datetime as dt
 import load_utilies as lu
 import sys
-
-def progress(count, total, status=''):
-    print(' in progress ')
-    bar_len = 60
-    filled_len = int(round(bar_len * count / float(total)))
-
-    percents = round(100.0 * count / float(total), 1)
-    bar = '=' * filled_len + '-' * (bar_len - filled_len)
-
-    sys.stdout.write('[%s] %s%s ...%s\r' % (bar, percents, '%', status))
-    sys.stdout.flush()
+import random 
 
 def main():
     
@@ -91,8 +81,8 @@ def main():
                         total = 901
                         i = 1
                         while i < total:
-                            print(i)
-                            progress(i, total, status='seconds elapsed')
+                            if random.random() < 0.05:
+                                print('elapsed: ' + i +'sec')
                             time.sleep(1)  # emulating long-playing job
                             i += 1
 
