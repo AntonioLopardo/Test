@@ -72,7 +72,7 @@ def main():
     reg_coor_write(coor_csv_files, data_path)
     reg_list_write(coor_csv_files, data_path)
 
-    map_dir,_ = lu.load_map_file()
+    map_dir,labels_feature = lu.load_map_file()
 
     with open('config.csv', 'w') as f:
         writer = csv.writer(f,delimiter=',')
@@ -80,6 +80,7 @@ def main():
         writer.writerow(['regions_list','LIST_ZONES.csv'])
         writer.writerow(['coor_dict','COOR_ZONES.csv'])
         writer.writerow(['map',map_dir])
+        writer.writerow(['labels_feature',labels_feature])
 
 
 if __name__ == "__main__":
