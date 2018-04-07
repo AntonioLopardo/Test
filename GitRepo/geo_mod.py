@@ -69,19 +69,22 @@ def map_generator(exact_regions_list, search_groups_list, map, labels_feature, d
                   'Cyan':'#46f0f0'}
     
     search_groups_colors_dict = {}
-    
+    color_list = list(colors_dict.keys())
     for search_group in search_groups_list:
-        color_list = list(colors_dict.keys())
-        print(color_list[:])
-        color = input('Choose the color for ' + search_group + ':')
-        search_groups_colors_dict[search_group] = colors_dict[color]
-        
+        while 1:
+            try:
+                print(color_list[:])
+                color = input('Choose the color for ' + search_group + ':')
+                search_groups_colors_dict[search_group] = colors_dict[color]
+            except:
+                print('Invalid input')
+            
         
     
     style_function = lambda feature:{
         'fillColor': search_groups_colors_dict[feature['properties']['FAV']],
         'color' : search_groups_colors_dict[feature['properties']['FAV']],
-        'weight' : 1,
+        'weight' : 2,
         'fillOpacity' : 0.8,
         } 
     
