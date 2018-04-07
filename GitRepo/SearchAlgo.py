@@ -87,6 +87,7 @@ def main():
                     except:#exception handling, both rate limit and search limit
                         print('exception raised, waiting 15 minutes')
                         print('(until:', dt.datetime.now()+dt.timedelta(minutes=15), ')')
+                        print('test')
                         total = 901
                         i = 1
                         while i < total:
