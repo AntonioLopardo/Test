@@ -1,6 +1,7 @@
 import json
 import subprocess
 import os
+import Folium_map_mod as fm
 
 def map_generator(exact_regions_list, search_groups_list, map, labels_feature, dict, script_cwd, tippecanoe = False):
 
@@ -29,11 +30,11 @@ def map_generator(exact_regions_list, search_groups_list, map, labels_feature, d
 
     with open(new_map, "w+") as fw: #writing the new GEOJSON map
         json.dump(data, fw)
-    
+
     if tippecanoe:
         exact_dir_mbtiles = new_map.split('.')[0] + '.mbtiles' #directory of actual map usable in Mapbox as a .mbtiles
 
-    
+
         mbtiles_journal_files = [mbj_file for mbj_file in os.listdir(os.getcwd()) if mbj_file.endswith('.mbtiles-journal')]
 
         for file in mbtiles_journal_files: #eliminating the the .mbtiles-journals that don't allow for a new map to be made

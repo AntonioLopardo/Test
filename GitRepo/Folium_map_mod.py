@@ -15,7 +15,7 @@ def change_prop(prop):
         return "<em>{}</em>".format(feature["properties"][prop])
     return make_popupcontent
 
-def data_entry_map(map_dir=None):
+def data_entry_map(map_dir=None,style_function=None):
     m = folium.Map(
         tiles='cartodbpositron'
     )
@@ -31,7 +31,7 @@ def data_entry_map(map_dir=None):
 
         draw.add_to(m)
 
-        folium.GeoJson(data, popup_function=make_popupcontent).add_to(m)
+        folium.GeoJson(data, popup_function=make_popupcontent, style_function=style_function).add_to(m)
 
         folium.LayerControl().add_to(m)
         
