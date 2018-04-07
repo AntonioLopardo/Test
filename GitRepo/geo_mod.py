@@ -2,7 +2,7 @@ import json
 import subprocess
 import os
 
-def map_generator(exact_regions_list, search_groups_list, map, labels_feature, dict, script_cwd):
+def map_generator(exact_regions_list, search_groups_list, map, labels_feature, dict, script_cwd, tippecanoe = False):
 
     with open(map,"r") as f: #Loading data
         data = json.load(f)
@@ -29,35 +29,63 @@ def map_generator(exact_regions_list, search_groups_list, map, labels_feature, d
 
     with open(new_map, "w+") as fw: #writing the new GEOJSON map
         json.dump(data, fw)
-
-    exact_dir_mbtiles = new_map.split('.')[0] + '.mbtiles' #directory of actual map usable in Mapbox as a .mbtiles
+    
+    if tippecanoe:
+        exact_dir_mbtiles = new_map.split('.')[0] + '.mbtiles' #directory of actual map usable in Mapbox as a .mbtiles
 
     
-    mbtiles_journal_files = [mbj_file for mbj_file in os.listdir(os.getcwd()) if mbj_file.endswith('.mbtiles-journal')]
+        mbtiles_journal_files = [mbj_file for mbj_file in os.listdir(os.getcwd()) if mbj_file.endswith('.mbtiles-journal')]
 
-    for file in mbtiles_journal_files: #eliminating the the .mbtiles-journals that don't allow for a new map to be made
-        os.remove(file)
+        for file in mbtiles_journal_files: #eliminating the the .mbtiles-journals that don't allow for a new map to be made
+            os.remove(file)
+
+        mbtiles_files = [mb_file for mb_file in os.listdir(os.getcwd()) if mb_file.endswith('.mbtiles')]
+
+        for file in mbtiles_files: #eliminating the the .mbtiles that don't allow for a new map to be made
+            os.remove(file)
+
+        subprocess.check_call(["tippecanoe",
+                                "-o",
+                                exact_dir_mbtiles,
+                                "-Z",
+                                "4",
+                                "-z",
+                                "10",
+                                new_map]) #running bash tippecanoe to reformat the map in order to be directly usable in Mapbox
+
+        mbtiles_journal_files = [mbj_file for mbj_file in os.listdir(os.getcwd()) if mbj_file.endswith('.mbtiles-journal')]
+
+        for file in mbtiles_journal_files: #eliminating the the .mbtiles-journals that don't allow for a new map to be made
+            os.remove(file)
+
+    #os.remove(new_map) #eliminating the GEOJSON map in order to leave the data directory as it was found
+    colors_dict = {'Red':'#e6194b',
+                  'Green':'#3cb44b',
+                  'Yellow':'#ffe119',
+                  'Blue':'#0082c8',
+                  'Orange':'#f58231',
+                  'Purple':'#911eb4',
+                  'Cyan':'#46f0f0'}
+    
+    search_groups_colors_dict = {}
+    
+    for search_group in search_groups_list:
+        color_list = list(colors_dict.keys())
+        print(color_list[:])
+        color = input('Choose the color for ' + search_group + ':')
+        search_groups_colors_dict[search_group] = colors_dict[color]
         
-    mbtiles_files = [mb_file for mb_file in os.listdir(os.getcwd()) if mb_file.endswith('.mbtiles')]
+        
     
-    for file in mbtiles_files: #eliminating the the .mbtiles that don't allow for a new map to be made
-        os.remove(file)
+    style_function = lambda feature:{
+        'fillColor': search_groups_colors_dict[feature['properties']['FAV']],
+        'color' : search_groups_colors_dict[feature['properties']['FAV']],
+        'weight' : 1,
+        'fillOpacity' : 0.8,
+        } 
     
-    subprocess.check_call(["tippecanoe",
-                            "-o",
-                            exact_dir_mbtiles,
-                            "-Z",
-                            "4",
-                            "-z",
-                            "10",
-                            new_map]) #running bash tippecanoe to reformat the map in order to be directly usable in Mapbox
-
-    mbtiles_journal_files = [mbj_file for mbj_file in os.listdir(os.getcwd()) if mbj_file.endswith('.mbtiles-journal')]
-
-    for file in mbtiles_journal_files: #eliminating the the .mbtiles-journals that don't allow for a new map to be made
-        os.remove(file)
-
-    os.remove(new_map) #eliminating the GEOJSON map in order to leave the data directory as it was found
+    m = fm.data_entry_map(map_dir = new_map,style_function = style_function)
+    m.save('ColoredMap.html')
 
 
 
