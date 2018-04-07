@@ -76,6 +76,7 @@ def map_generator(exact_regions_list, search_groups_list, map, labels_feature, d
                 print(color_list[:])
                 color = input('Choose the color for ' + search_group + ':')
                 search_groups_colors_dict[search_group] = colors_dict[color]
+                break
             except:
                 print('Invalid input')
             
