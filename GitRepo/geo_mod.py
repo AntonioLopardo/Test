@@ -89,7 +89,7 @@ def map_generator(exact_regions_list, search_groups_list, map, labels_feature, d
         'fillOpacity' : 0.8,
         } 
     
-    m = fm.data_entry_map(map_dir = new_map,style_function = style_function)
+    m = fm.data_entry_map(map_dir = new_map,style_function = style_function, labels_feature = labels_feature)
     m.save('ColoredMap.html')
 
 
