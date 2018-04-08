@@ -21,7 +21,7 @@ def data_entry_map(map_dir=None,style_function=None, labels_feature=None):
     if map_dir is not None:
         data = geopandas.GeoDataFrame.from_file(map_dir)
         
-        if labels_feature==None:
+        if labels_feature is None:
             labels_feature = lu.load_labels_feature(map_dir)
         
         make_popupcontent = change_prop(labels_feature)
