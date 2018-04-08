@@ -4,7 +4,6 @@ import geopandas
 import pandas as pd
 import csv
 import string
-import load_utilies as lu
 from folium.plugins import Draw
 
 data_dir = '/home/antoniolopardo/Desktop/myRNN/Test/GitRepo/example_camera_senato/Example/COLL_LAZIO_CAMERA_PLUR_2018.geojson'
@@ -15,7 +14,7 @@ def change_prop(prop):
         return "<em>{}</em>".format(feature["properties"][prop])
     return make_popupcontent
 
-def data_entry_map(map_dir=None,style_function=None):
+def data_entry_map(map_dir=None,style_function=None, labels_feature):
     m = folium.Map(
         tiles='cartodbpositron'
     )
@@ -23,9 +22,7 @@ def data_entry_map(map_dir=None,style_function=None):
     if map_dir is not None:
         data = geopandas.GeoDataFrame.from_file(map_dir)
         
-        feature_name = lu.load_labels_feature(map_dir)
-        
-        make_popupcontent = change_prop(feature_name)
+        make_popupcontent = change_prop(labels_feature)
         
         draw = Draw()
 
