@@ -1,3 +1,9 @@
+'''
+file_writer_mod writes 
+-the COOR_ZONES.csv which contains the coordinates and radii of the search zones
+-the LIST_ZONES.csv which contains the names of the search zones in such a way as to indicate which belong to the same region
+-the config.csv which serves as guide for SearcAlgo an pop_general to load the data from the directory
+'''
 import os
 import load_utilies as lu
 import sys
@@ -5,8 +11,11 @@ import string
 import csv
 
 def reg_coor_write(list_csv_files, data_path):
-    print('coor')
-    alphabet = list(string.ascii_lowercase)
+    '''
+    Takes in csvs of the coordinates of the search zones and writes COOR_ZONES.csv
+    consolidating the information in a single csv
+    '''
+    alphabet = list(string.ascii_lowercase) #used to name the different circles that make up a single region
     coor_list = []
     for file in list_csv_files:
 
@@ -32,6 +41,10 @@ def reg_coor_write(list_csv_files, data_path):
             writer.writerow(coor_list_entry)
 
 def reg_list_write(list_csv_files, data_path):
+    '''
+    Takes in csvs of the coordinates of the search zones and writes LIST_ZONES.csv
+    in such a way as to indicate which belong to the same region
+    '''
     alphabet = list(string.ascii_lowercase)
     reg_list = []
     for file in list_csv_files:
