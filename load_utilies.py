@@ -169,10 +169,11 @@ def load_search_dict_from_path(data_path):
     return search_groups_dict
 
 def load_data_from_path_pop(data_path): 
-        '''
+    '''
     Loads search_groups_dict,search_groups_list,regions_list, map, labels_feature
     as needed in pop_general.py from a given directory
     '''
+    
     os.chdir(data_path)
 
     search_groups_dict = load_search_dict_from_path(data_path)
