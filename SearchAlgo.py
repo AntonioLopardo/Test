@@ -7,7 +7,7 @@ import os
 import time
 import pandas as pd
 import datetime as dt
-import load_utilies as lu
+import load_utilities as lu
 import sys
 import random 
 
