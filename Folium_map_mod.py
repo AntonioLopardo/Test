@@ -8,7 +8,7 @@ import pandas as pd
 import csv
 import string
 from folium.plugins import Draw
-import load_utilities.py as lu
+import load_utilities as lu
 
 make_popupcontent = 'hello'
 
