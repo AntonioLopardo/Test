@@ -1,16 +1,30 @@
+'''
+load_utilies is used to load from search_dict.csv and config.csv 
+the data need for SearchAlgo, pop_general, file_writer_mod
+and Folium_map_mod
+'''
+
 import os
 import json
 import csv
 import pandas as pd
 
 def load_coor_data_from_file(filename):
+    '''
+    Loads the coor data by name given a tab separated csv
+    '''
+    
     data = pd.read_csv(filename, encoding='latin_1',sep=' ', index_col = 0)
     print(data)
     coor_dict = {}
     coor_dict = data['COOR'].to_dict()
     return coor_dict #load the dict of coordinates by name given a tab separated csv
 
-def load_regions_list_from_file(filename): #load the list of regions by name given a tab separated csv
+def load_regions_list_from_file(filename): 
+    '''
+    Loads the list of regions by name given a tab separated csv
+    '''
+    
     regions_list = []
     with open(filename) as f:
         for line in f.readlines():
@@ -19,7 +33,11 @@ def load_regions_list_from_file(filename): #load the list of regions by name giv
 
     return regions_list
 
-def load_coor_data():#Discovers the CSV COOR DATA loading the dict of coordinates
+def load_coor_data():
+    '''
+    Allows to choose among the csvs present in the directory 
+    which is the one that contains the coordinate data for the regions 
+    '''
     coor_csv_files = [csv_file for csv_file in os.listdir(os.getcwd()) if csv_file.endswith('.csv')]
 
     if len(coor_csv_files) == 1:
@@ -32,7 +50,12 @@ def load_coor_data():#Discovers the CSV COOR DATA loading the dict of coordinate
 
     return coor_dict
 
-def load_regions_list():#Discovers the CSV REGIONS loading the list of regions
+def load_regions_list():
+    '''
+    Allows to choose among the csvs present in the directory 
+    which is the one that lists the search regions
+    '''
+    
     list_csv_files = [csv_file for csv_file in os.listdir(os.getcwd()) if csv_file.endswith('.csv')]
 
     if len(list_csv_files) == 1:
@@ -46,6 +69,10 @@ def load_regions_list():#Discovers the CSV REGIONS loading the list of regions
     return regions_list
 
 def load_labels_feature(filename):#Discovers the feature for the names of the regions
+    '''
+    Asks the user to indicate the field that contains the names of the regions in the map
+    '''
+    
     with open(filename,"r") as f:
         data = json.load(f)
 
@@ -60,6 +87,11 @@ def load_labels_feature(filename):#Discovers the feature for the names of the re
     return labels_feature
 
 def load_map_file(): #Discovers the GEOJSON map file
+    '''
+    Identifies and returns the geojson map choosen in the current directory 
+    and asks the user to indicate the field that contains the names of the regions in the map
+    '''
+    
     map_geojson_files = [geojson_file for geojson_file in os.listdir(os.getcwd()) if geojson_file.endswith('.geojson')]
 
     if len(map_geojson_files) == 1:
@@ -74,6 +106,11 @@ def load_map_file(): #Discovers the GEOJSON map file
     return map, labels_feature
 
 def load_search_dict_from_path(data_path):
+    '''
+    Loads from search_dict.csv or asks the user the search groups and search terms
+    consequently writing search_dict.csv
+    '''
+    
     search_groups_dict = {}
 
     if os.path.isfile('search_dict.csv') == False:
@@ -131,7 +168,11 @@ def load_search_dict_from_path(data_path):
 
     return search_groups_dict
 
-def load_data_from_path_pop(data_path): #Changes directory and loads the search_groups_list,regions_list, map from the directory given by looking for matching file extesions
+def load_data_from_path_pop(data_path): 
+        '''
+    Loads search_groups_dict,search_groups_list,regions_list, map, labels_feature
+    as needed in pop_general.py from a given directory
+    '''
     os.chdir(data_path)
 
     search_groups_dict = load_search_dict_from_path(data_path)
@@ -156,7 +197,12 @@ def load_data_from_path_pop(data_path): #Changes directory and loads the search_
 
     return search_groups_dict,search_groups_list,regions_list, map, labels_feature
 
-def load_data_from_path_search(data_path): #Changes directory and loads the search_groups_list,regions_list, map from the directory given by looking for matching file extesions
+def load_data_from_path_search(data_path):
+    '''
+    Loads search_groups_dict,search_groups_list, regions_list, coor_dict 
+    as needed in SearchAlgo.py from a given directory
+    '''
+    
     os.chdir(data_path)
 
     search_groups_dict = load_search_dict_from_path(data_path)
