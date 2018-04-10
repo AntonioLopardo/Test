@@ -1,3 +1,7 @@
+'''
+pop_general computes the popularity of every search group in each region
+producing a popularity dictionary sent to ge_mod to create the folium colored map
+'''
 import os
 import json
 import random
