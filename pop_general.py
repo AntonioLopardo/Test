@@ -7,7 +7,7 @@ import json
 import random
 import sent_mod as s
 import geo_mod as gj
-import load_utilies as lu
+import load_utilities as lu
 import sys
 
 global_counter = 0 #Global Counter to print the number of tweets actually used during the analysis
