@@ -6,3 +6,4 @@
 
 ### Link to MAP for [2018 ITALIAN ELECTION](http://www.elezioni2018-twitterpoliticalsentiment.com/Senato/)
 (Not terribly predictive but still a good application of the program)
+[![LINK ITALIAN ELECTION](README_data/Election.PNG)](http://www.elezioni2018-twitterpoliticalsentiment.com/Senato/)
