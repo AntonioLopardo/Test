@@ -5,7 +5,7 @@ file_writer_mod writes
 -the config.csv which serves as guide for SearcAlgo an pop_general to load the data from the directory
 '''
 import os
-import load_utilies as lu
+import load_utilities as lu
 import sys
 import string
 import csv
