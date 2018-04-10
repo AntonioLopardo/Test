@@ -1,9 +1,20 @@
+'''
+geo_mod colors the map computing the most popular group 
+in each region given the popularity dictionary (dict) from 
+pop_general
+'''
+
 import json
 import subprocess
 import os
 import Folium_map_mod as fm
 
 def map_generator(exact_regions_list, search_groups_list, map, labels_feature, dict, script_cwd, tippecanoe = False):
+    '''
+    map_generator colors the map computing the most popular group 
+    in each region given the popularity dictionary (dict) from 
+    pop_general
+    '''
 
     with open(map,"r") as f: #Loading data
         data = json.load(f)
@@ -30,8 +41,13 @@ def map_generator(exact_regions_list, search_groups_list, map, labels_feature, d
 
     with open(new_map, "w+") as fw: #writing the new GEOJSON map
         json.dump(data, fw)
-
+        
     if tippecanoe:
+        '''
+        In case one would like to use the map in Mapbox tippecanoe reformats
+        the geojson in mbtiles the recommended format for the service
+        '''
+        
         exact_dir_mbtiles = new_map.split('.')[0] + '.mbtiles' #directory of actual map usable in Mapbox as a .mbtiles
 
 
@@ -44,7 +60,8 @@ def map_generator(exact_regions_list, search_groups_list, map, labels_feature, d
 
         for file in mbtiles_files: #eliminating the the .mbtiles that don't allow for a new map to be made
             os.remove(file)
-
+        
+        #calling tippecanoe from python
         subprocess.check_call(["tippecanoe",
                                 "-o",
                                 exact_dir_mbtiles,
@@ -59,8 +76,8 @@ def map_generator(exact_regions_list, search_groups_list, map, labels_feature, d
         for file in mbtiles_journal_files: #eliminating the the .mbtiles-journals that don't allow for a new map to be made
             os.remove(file)
 
-    #os.remove(new_map) #eliminating the GEOJSON map in order to leave the data directory as it was found
-    colors_dict = {'Red':'#e6194b',
+   
+    colors_dict = {'Red':'#e6194b', 
                   'Green':'#3cb44b',
                   'Yellow':'#ffe119',
                   'Blue':'#0082c8',
@@ -71,7 +88,7 @@ def map_generator(exact_regions_list, search_groups_list, map, labels_feature, d
     search_groups_colors_dict = {}
     color_list = list(colors_dict.keys())
     for search_group in search_groups_list:
-        while 1:
+        while 1:#looping while a valid choice has been made for the current search group
             try:
                 print(color_list[:])
                 color = input('Choose the color for ' + search_group + ':')
@@ -81,7 +98,7 @@ def map_generator(exact_regions_list, search_groups_list, map, labels_feature, d
                 print('Invalid input')
             
         
-    
+    #folium formatted style_function need to add the colors to the map
     style_function = lambda feature:{
         'fillColor': search_groups_colors_dict[feature['properties']['FAV']],
         'color' : search_groups_colors_dict[feature['properties']['FAV']],
