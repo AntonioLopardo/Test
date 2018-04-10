@@ -1,4 +1,6 @@
-
+'''
+sent_mod importing the keras model performs the sentiment analysis on every tweet
+'''
 import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
 import keras
 import pickle
@@ -16,6 +18,13 @@ tokenizer.oov_token = None
 model = load_model('model_files/ItalianSentCls.h5')
 
 def sentiment(text):
+    '''
+    sentiment computes the sentiment of the text given returning 
+    1 if it's more confidente the the text given is positive and 0 
+    otherwise alongside the sentiment it return a confidence score
+    from 0.5 to 1.0
+    '''
+    
     text = [text]
     text = tokenizer.texts_to_sequences(text)
     #print(text)
