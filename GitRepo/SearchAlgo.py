@@ -1,3 +1,7 @@
+'''
+SearchAlgo manages the search for tweets sending 
+TweetSearch every term for every group for each region
+'''
 import TweetSearch as ts
 import os
 import time
