@@ -18,22 +18,41 @@ def compute_pop(filenames): #Compute the popularity of a single search group in 
     pop = 0 # number of positive tweets
     num_tweets = 0 # number of tweets
     normpop = 0 # pop/num_tweets
+    lang = 'it'
     for file in filenames:
         #print(file)
         with open(file, 'r') as f:
             tweets_data_infile = []
             for line in f:
                     tweets_data_infile.append(json.loads(line))
+        detclang = TextBlob(tweets_data_infile[0]['text']).detect_language()
+        print(detclang)
+        if detclang is 'en':
+            lang = 'en'
+        else if detclang is 'it':
+            lang = 'it'
         for record in tweets_data_infile:
-            sent_value, conf = s.sentiment(record['text']) #Computing the sentiment and confidence through sentiment_mod
-            if conf*100>=80:
-                if random.uniform(0,1) < 0.0005:
-                    print(record['text'])
-                    print(sent_value, conf)
-                num_tweets += 1 # increasing the number of tweets annalyzed
-                global_counter +=1
-                if sent_value>0:
+            sent_value, conf = s.sentiment(record['text'],lang) #Computing the sentiment and confidence through sentiment_mod
+            
+            if lang is 'en':
+                    if conf*100>=30:
+                        if random.uniform(0,1) < 0.0005:
+                            print(record['text'])
+                            print(sent_value, conf)
+                        num_tweets += 1 # increasing the number of tweets annalyzed
+                        global_counter +=1
+                if sent_value is 1:
                     pop +=1 # increasing the number of positive tweets annalyzed
+            
+            if lang is 'it'
+                    if conf*100>=80:
+                        if random.uniform(0,1) < 0.0005:
+                            print(record['text'])
+                            print(sent_value, conf)
+                        num_tweets += 1 # increasing the number of tweets annalyzed
+                        global_counter +=1
+                        if sent_value is 1:
+                            pop +=1 # increasing the number of positive tweets annalyzed
 
     try:
         normpop = pop/num_tweets
