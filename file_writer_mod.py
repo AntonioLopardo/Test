@@ -29,7 +29,7 @@ def reg_coor_write(list_csv_files, data_path):
             alpha_counter += 1
             lat = data_list[0][i]
             lng = data_list[0][i+1]
-            radius = data_list[0][i+2].split('.')[0][:-2]+'.'+data_list[0][i+2].split('.')[0][-2:]
+            radius = data_list[0][i+2].split('.')[0][:-3]+'.'+data_list[0][i+2].split('.')[0][-3:]
             coor_data = lat+','+lng+','+radius+'km'
             coor_list_entry = [zone_name,coor_data]
             coor_list.append(coor_list_entry)
