@@ -9,7 +9,7 @@ import sent_mod as s
 import geo_mod as gj
 import load_utilities as lu
 import sys
-import textblob as TextBlob
+from textblob import TextBlob
 
 global_counter = 0 #Global Counter to print the number of tweets actually used during the analysis
 
