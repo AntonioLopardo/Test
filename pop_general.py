@@ -29,7 +29,7 @@ def compute_pop(filenames): #Compute the popularity of a single search group in 
         print(detclang)
         if detclang is 'en':
             lang = 'en'
-        else if detclang is 'it':
+        elif detclang is 'it':
             lang = 'it'
         for record in tweets_data_infile:
             sent_value, conf = s.sentiment(record['text'],lang) #Computing the sentiment and confidence through sentiment_mod
@@ -41,8 +41,8 @@ def compute_pop(filenames): #Compute the popularity of a single search group in 
                             print(sent_value, conf)
                         num_tweets += 1 # increasing the number of tweets annalyzed
                         global_counter +=1
-                if sent_value is 1:
-                    pop +=1 # increasing the number of positive tweets annalyzed
+                        if sent_value is 1:
+                            pop +=1 # increasing the number of positive tweets annalyzed
             
             if lang is 'it'
                     if conf*100>=80:
