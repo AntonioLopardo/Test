@@ -43,7 +43,7 @@ def sentiment(text,lang):
             sentiment = 1
             confidence = results[0][1]
     
-    else if lang is 'en':
+    elif lang is 'en':
         textb = TextBlob(text)
         sentiment = 3
         confidence = 0.0
