@@ -26,9 +26,18 @@ def compute_pop(filenames,lang): #Compute the popularity of a single search grou
             tweets_data_infile = []
             for line in f:
                     tweets_data_infile.append(json.loads(line))
+<<<<<<< HEAD
 
         print('\n Sentiment language: ' + lang)
 
+=======
+        detclang = TextBlob(tweets_data_infile[0]['text']).detect_language()
+        print(detclang)
+        if detclang is 'en':
+            lang = 'en'
+        elif detclang is 'it':
+            lang = 'it'
+>>>>>>> f82c7373038858ccbf36c8ccf40533ac7efb8f56
         for record in tweets_data_infile:
             sent_value, conf = s.sentiment(record['text'],lang) #Computing the sentiment and confidence through sentiment_mod
             
