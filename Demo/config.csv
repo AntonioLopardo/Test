@@ -1,0 +1,5 @@
+TYPE,FILE
+regions_list,LIST_ZONES.csv
+coor_dict,COOR_ZONES.csv
+map,COLL_LAZIO_CAMERA_PLUR_2018.geojson
+labels_feature,CAM17P_DEN

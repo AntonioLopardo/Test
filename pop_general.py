@@ -9,44 +9,42 @@ import sent_mod as s
 import geo_mod as gj
 import load_utilities as lu
 import sys
+from textblob import TextBlob
 
 global_counter = 0 #Global Counter to print the number of tweets actually used during the analysis
 
-def compute_pop(filenames): #Compute the popularity of a single search group in a single region given a list of file
+def compute_pop(filenames,lang): #Compute the popularity of a single search group in a single region given a list of file
     global global_counter
     tweets_data = []
     pop = 0 # number of positive tweets
     num_tweets = 0 # number of tweets
     normpop = 0 # pop/num_tweets
-    lang = 'it'
+
     for file in filenames:
         #print(file)
         with open(file, 'r') as f:
             tweets_data_infile = []
             for line in f:
                     tweets_data_infile.append(json.loads(line))
-        detclang = TextBlob(tweets_data_infile[0]['text']).detect_language()
-        print(detclang)
-        if detclang is 'en':
-            lang = 'en'
-        else if detclang is 'it':
-            lang = 'it'
+
+        print('\n Sentiment language: ' + lang)
+
         for record in tweets_data_infile:
             sent_value, conf = s.sentiment(record['text'],lang) #Computing the sentiment and confidence through sentiment_mod
             
-            if lang is 'en':
+            if lang == 'en':
                     if conf*100>=30:
-                        if random.uniform(0,1) < 0.0005:
+                        if random.uniform(0,1) < 0.05:
                             print(record['text'])
                             print(sent_value, conf)
                         num_tweets += 1 # increasing the number of tweets annalyzed
                         global_counter +=1
-                if sent_value is 1:
-                    pop +=1 # increasing the number of positive tweets annalyzed
+                        if sent_value is 1:
+                            pop +=1 # increasing the number of positive tweets annalyzed
             
-            if lang is 'it'
+            if lang == 'it':
                     if conf*100>=80:
-                        if random.uniform(0,1) < 0.0005:
+                        if random.uniform(0,1) < 0.05:
                             print(record['text'])
                             print(sent_value, conf)
                         num_tweets += 1 # increasing the number of tweets annalyzed
@@ -65,6 +63,8 @@ def compute_pop(filenames): #Compute the popularity of a single search group in 
     return normpop
 
 def main():
+    
+    lang = sys.argv[2]
 
     script_cwd = os.getcwd()
     
@@ -116,8 +116,8 @@ def main():
                     os.chdir(dir_pre_folder)
 
                 os.chdir(dir_pre_region)
-
-            pop_dict[search_group][name_region] = compute_pop(json_files) #Computing the popularity of the search_group in the Region
+            
+            pop_dict[search_group][name_region] = compute_pop(json_files,lang) #Computing the popularity of the search_group in the Region
             print(name_region + '-' + search_group + ':' + str(pop_dict[search_group][name_region]))
 
         os.chdir(dir_pre_group)

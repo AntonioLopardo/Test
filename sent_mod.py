@@ -28,7 +28,8 @@ def sentiment(text,lang):
     the text given is positive and 0 otherwise, alongside the sentiment it returns 
     a confidence score from 0.0 to 1.0
     '''
-    if lang is 'it' :
+ 
+    if lang == 'it' :
         text = [text]
         text = tokenizer.texts_to_sequences(text)
         #print(text)
@@ -43,7 +44,7 @@ def sentiment(text,lang):
             sentiment = 1
             confidence = results[0][1]
     
-    else if lang is 'en':
+    elif lang == 'en':
         textb = TextBlob(text)
         sentiment = 3
         confidence = 0.0
